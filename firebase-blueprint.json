@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "Member": {
+      "title": "Member",
+      "description": "A member of the mess",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "photo": { "type": "string" },
+        "joinDate": { "type": "string" }
+      },
+      "required": ["id", "name", "joinDate"]
+    },
+    "MealCounts": {
+      "title": "MealCounts",
+      "description": "Meal counts for a member in a day",
+      "type": "object",
+      "properties": {
+        "breakfast": { "type": "number" },
+        "lunch": { "type": "number" },
+        "dinner": { "type": "number" }
+      }
+    },
+    "DailyEntry": {
+      "title": "DailyEntry",
+      "description": "Daily expense and meal details",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "bazaarAmount": { "type": "number" },
+        "bazaarDescription": { "type": "string" },
+        "shopperId": { "type": "string" },
+        "meals": { "type": "object" }
+      },
+      "required": ["date", "bazaarAmount", "meals"]
+    },
+    "Deposit": {
+      "title": "Deposit",
+      "description": "A donation/deposit by a member",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "memberId": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string" },
+        "note": { "type": "string" }
+      },
+      "required": ["id", "memberId", "amount", "date"]
+    },
+    "AppState": {
+      "title": "AppState",
+      "description": "The entire state of the mess data",
+      "type": "object",
+      "properties": {
+        "members": { "type": "array", "items": { "$ref": "Member" } },
+        "dailyEntries": { "type": "object" },
+        "deposits": { "type": "array", "items": { "$ref": "Deposit" } },
+        "otherExpenses": { "type": "number" }
+      }
+    }
+  },
+  "firestore": {
+    "messes/{userId}": {
+      "schema": "AppState",
+      "description": "Stores all mess data for a specific manager"
+    }
+  }
+}
